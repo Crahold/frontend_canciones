@@ -1,0 +1,40 @@
+/* ------------------------------------------------------------------ */
+/* Sección de Inicio
+/* ------------------------------------------------------------------ */
+
+#Inicio table td, table th{
+    border: 2px solid black;
+    padding: 10px 10px 10px 10px;
+}
+
+#Inicio table th {
+    font-size: x-large;
+}
+
+#Inicio h2, h3, h6, td, th{
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#Inicio .tablaCanciones {
+    margin-left: 15%;
+}
+
+#agregarCan {
+    margin-left: 437.5px;
+    padding: 0px 20px 8px 20px;
+    border-radius: 50px;
+    font-size: 40px;
+    font-weight: bolder;
+    background-color: rgb(18, 18, 218);
+    box-shadow: 0px 0px 10px black;
+}
+
+#agregarCan:hover {
+    background-color: blue;
+    box-shadow: 0px 0px 20px black;
+}
+
+#medidas {
+    width: 457.5px;
+}
