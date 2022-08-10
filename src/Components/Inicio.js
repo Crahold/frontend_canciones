@@ -1,13 +1,48 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label, Button } from 'reactstrap';
 
 export default class Inicio extends Component {
+    state = {
+        Abierto: false
+    }
+
     constructor(props) {
         super(props);
         this.state = {
-            listaCancionesFav: []
+            listaCancionesFav: [],
+            nombre: '',
+            grupo: '',
+            anio: 0,
+            genero: ''
         };
         this.getCanciones();
+    }
+
+    hacerCambios = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    insertarCancion = () => {
+        const singcancion = {
+            infocancion: {
+                nombre: this.state.nombre,
+                grupo: this.state.grupo,
+                anio: parseInt(this.state.anio),
+                genero: this.state.genero
+            }
+        }
+        console.log(JSON.stringify(singcancion))
+
+        axios.post('http://localhost:5000/canciones/', singcancion)
+            .then((response) => this.props.history.push("/"))
+            .catch((error) => console.log(error));
+    }
+
+    abrirModalIngresar = () => {
+        this.setState({ Abierto: !this.state.Abierto })
     }
 
     getCanciones() {
@@ -20,7 +55,14 @@ export default class Inicio extends Component {
     }
 
     render() {
+        const modalStyles = {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+        }
         return (
+            <>
             <div id='Inicio'>
                 <br />
                 <h3>¡¡Bienvenido <b>Usuario6480</b> a tus canciones favoritas!!</h3>
@@ -54,9 +96,38 @@ export default class Inicio extends Component {
                         </tbody>
                     </table>
                     <br/>
-                    <button id="agregarCan">+</button>
+                    <button onClick={this.abrirModalIngresar} id="agregarCan">+</button>
                 </div>
             </div>
+
+            <Modal isOpen={this.state.Abierto} style={modalStyles}>
+                <ModalHeader>
+                    <h2><center>¡Ingresa la nueva canción!</center></h2>
+                </ModalHeader>
+                <ModalBody>
+                    <FormGroup>
+                        <Label for='nombre'>Nombre: </Label>
+                        <Input type='text' name='nombre' id='nombre' onChange={(e) => this.hacerCambios(e)} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for='grupo'>Grupo: </Label>
+                        <Input type='text' name='grupo' id='grupo' onChange={(e) => this.hacerCambios(e)} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for='anio'>Año: </Label>
+                        <Input type='text' name='anio' id='anio' onChange={(e) => this.hacerCambios(e)} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for='genero'>Genero: </Label>
+                        <Input type='text' name='genero' id='genero' onChange={(e) => this.hacerCambios(e)} />
+                    </FormGroup>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color='success' onClick={this.insertarCancion}>Agregar Canción</Button>
+                    <Button color='primary' onClick={() => { this.abrirModalIngresar (); window.location.reload()}}>Cerrar</Button>
+                </ModalFooter>
+            </Modal>
+            </>
         )
     }
 }
