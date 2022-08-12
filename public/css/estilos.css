@@ -82,8 +82,8 @@ a:hover {
 }
 
 #Inicio .tablaFavoritas {
-    overflow-y: scroll;
-    max-height: 500px;
+    overflow-y: scroll !important;
+    max-height: 500px !important;
 }
 
 #Modales {
