@@ -29,39 +29,67 @@ export default class Inicio extends Component {
     }
 
     insertarCancion = () => {
-        const singcancion = {
-            infocancion: {
-                nombre: this.state.nombre,
-                grupo: this.state.grupo,
-                anio: parseInt(this.state.anio),
-                genero: this.state.genero
+        if (this.state.nombre !== "" && this.state.grupo !== "" && this.state.anio !== 0 && this.state.genero !== "") {
+            var currentTime = new Date();
+            if (this.state.anio <= currentTime.getFullYear()){
+                const singcancion = {
+                    infocancion: {
+                        nombre: this.state.nombre,
+                        grupo: this.state.grupo,
+                        anio: parseInt(this.state.anio),
+                        genero: this.state.genero
+                    }
+                }
+    
+                axios.post('https://cancionesbackend.herokuapp.com/canciones/', singcancion)
+                    .then((response) => this.props.history.push("/"))
+                    .catch((error) => console.log(error));
+    
+                window.location.reload();
+                this.cerrarModal();
+            }
+            else {
+                alert("Favor de introducir un año válido.");
             }
         }
-
-        axios.post('http://localhost:5000/canciones/', singcancion)
-            .then((response) => this.props.history.push("/"))
-            .catch((error) => console.log(error));
+        else {
+            alert("Favor de llenar todos los campos.")
+        }
     }
 
     eliminarCancion = (id) => {
-        axios.delete("http://localhost:5000/canciones/" + id).then((response) => {
+        axios.delete("https://cancionesbackend.herokuapp.com/canciones/" + id).then((response) => {
             console.log(JSON.stringify(response.data));
         });
     }
 
     editarCancion = (id) => {
-        const editarcancion = {
-            infocancion: {
-                nombre: this.state.nombre,
-                grupo: this.state.grupo,
-                anio: parseInt(this.state.anio),
-                genero: this.state.genero
+        if (this.state.nombre !== "" && this.state.grupo !== "" && this.state.anio !== 0 && this.state.genero !== "") {
+            var currentTime = new Date();
+            if (this.state.anio <= currentTime.getFullYear()){
+                const editarcancion = {
+                    infocancion: {
+                        nombre: this.state.nombre,
+                        grupo: this.state.grupo,
+                        anio: parseInt(this.state.anio),
+                        genero: this.state.genero
+                    }
+                }
+
+                axios.patch('https://cancionesbackend.herokuapp.com/canciones/' + id, editarcancion)
+                    .then((response) => this.props.history.push("/"))
+                    .catch((error) => console.log(error));
+                
+                window.location.reload();
+                this.cerrarModal();
+            }
+            else {
+                alert("Favor de introducir un año válido.");
             }
         }
-
-        axios.patch('http://localhost:5000/canciones/' + id, editarcancion)
-            .then((response) => this.props.history.push("/"))
-            .catch((error) => console.log(error));
+        else {
+            alert("Favor de llenar todos los campos.")
+        }
     }
 
     abrirModalIngresar = () => {
@@ -70,7 +98,7 @@ export default class Inicio extends Component {
 
     abrirModalEliminar = (id) => {
         this.setState({ AbiertoEliminar: !this.state.AbiertoEliminar })
-        axios.get("http://localhost:5000/canciones/" + id).then((response) => {
+        axios.get("https://cancionesbackend.herokuapp.com/canciones/" + id).then((response) => {
             this.setState({
                 cancionEliminar: response.data
             });
@@ -79,7 +107,7 @@ export default class Inicio extends Component {
 
     abrirModalEditar = (id) => {
         this.setState({ AbiertoEditar: !this.state.AbiertoEditar })
-        axios.get("http://localhost:5000/canciones/" + id).then((response) => {
+        axios.get("https://cancionesbackend.herokuapp.com/canciones/" + id).then((response) => {
             this.setState({
                 cancionEditar: response.data,
                 nombre: response.data[0].nombre,
@@ -103,7 +131,7 @@ export default class Inicio extends Component {
     }
 
     getCanciones() {
-        axios.get("http://localhost:5000/canciones/").then((response) => {
+        axios.get("https://cancionesbackend.herokuapp.com/canciones/").then((response) => {
             this.setState({
                 listaCancionesFav: response.data
             });
@@ -112,12 +140,7 @@ export default class Inicio extends Component {
     }
 
     render() {
-        const modalStyles = {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)'
-        }
+        
         return (
             <>
                 <div id='Inicio' className='Fondo'>
@@ -126,9 +149,10 @@ export default class Inicio extends Component {
                     <h6 className='Encabezado6'>A continuación podrás gestionar tu lista de canciones preferidas.</h6>
 
                     <br />
-                    <div >
+                    <div>
                         <br />
                         <br />
+                        <div className='tablaFavoritas'>
                         <table className="table, tablaCanciones">
                             <thead className="fondoEncabezadoTabla">
                                 <tr>
@@ -155,12 +179,13 @@ export default class Inicio extends Component {
                                 ))}
                             </tbody>
                         </table>
+                        </div>
                         <br />
                         <button className="agregarCan" onClick={() => this.abrirModalIngresar()}>+</button>
                     </div>
                 </div>
 
-                <Modal isOpen={this.state.Abierto} style={modalStyles}>
+                <Modal isOpen={this.state.Abierto} id='Modales'>
                     <ModalHeader>
                         <h2><center>¡Ingresa la nueva canción!</center></h2>
                     </ModalHeader>
@@ -183,12 +208,12 @@ export default class Inicio extends Component {
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='success' onClick={() => { this.insertarCancion(); this.cerrarModal(); window.location.reload(); }}>Agregar Canción</Button>
+                        <Button color='success' onClick={() => this.insertarCancion() }>Agregar Canción</Button>
                         <Button color='primary' onClick={() => this.cerrarModal() }>Cerrar</Button>
                     </ModalFooter>
                 </Modal>
 
-                <Modal isOpen={this.state.AbiertoEditar} style={modalStyles}>
+                <Modal isOpen={this.state.AbiertoEditar} id='Modales'>
                     <ModalHeader>
                         <h2><center>Edita los datos de la canción</center></h2>
                     </ModalHeader>
@@ -216,14 +241,14 @@ export default class Inicio extends Component {
 
                             </ModalBody>
                             <ModalFooter>
-                                <Button color='success' onClick={() => { this.editarCancion(item._id); this.cerrarModal(); window.location.reload(); }}>Editar Canción</Button>
+                                <Button color='success' onClick={() => this.editarCancion(item._id) }>Editar Canción</Button>
                                 <Button color='primary' onClick={() => this.cerrarModal()}>Cerrar</Button>
                             </ModalFooter>
                         </>
                     ))}
                 </Modal>
 
-                <Modal isOpen={this.state.AbiertoEliminar} style={modalStyles}>
+                <Modal isOpen={this.state.AbiertoEliminar} id='Modales'>
                     <ModalHeader>
                         <h2><center>¿Estás seguro de querer eliminar esta canción?</center></h2>
                     </ModalHeader>

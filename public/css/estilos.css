@@ -40,7 +40,6 @@
     margin-left: 10%;
     width: 80%;
     border-radius: 10px;
-    
 }
 
 .agregarCan {
@@ -80,4 +79,16 @@ a:hover {
 
 #nombre::placeholder, #grupo::placeholder, #anio::placeholder, #genero::placeholder {
     color: black;
+}
+
+#Inicio .tablaFavoritas {
+    overflow-y: scroll;
+    max-height: 500px;
+}
+
+#Modales {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
