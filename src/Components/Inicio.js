@@ -208,8 +208,8 @@ export default class Inicio extends Component {
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='success' onClick={() => this.insertarCancion() }>Agregar Canción</Button>
-                        <Button color='primary' onClick={() => this.cerrarModal() }>Cerrar</Button>
+                        <Button id='Boton-Morado' color='success' onClick={() => this.insertarCancion() }>Agregar Canción</Button>
+                        <Button id='Boton-Azul' color='primary' onClick={() => this.cerrarModal() }>Cerrar</Button>
                     </ModalFooter>
                 </Modal>
 
@@ -241,8 +241,8 @@ export default class Inicio extends Component {
 
                             </ModalBody>
                             <ModalFooter>
-                                <Button color='success' onClick={() => this.editarCancion(item._id) }>Editar Canción</Button>
-                                <Button color='primary' onClick={() => this.cerrarModal()}>Cerrar</Button>
+                                <Button id='Boton-Morado' color='success' onClick={() => this.editarCancion(item._id) }>Editar Canción</Button>
+                                <Button id='Boton-Azul' color='primary' onClick={() => this.cerrarModal()}>Cerrar</Button>
                             </ModalFooter>
                         </>
                     ))}
@@ -258,8 +258,8 @@ export default class Inicio extends Component {
                                 <h4><center>{item.nombre}</center></h4>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color='danger' onClick={() => { this.eliminarCancion(item._id); this.cerrarModal(); window.location.reload(); }}>Eliminar Canción</Button>
-                                <Button color='primary' onClick={() => this.cerrarModal()}>Cerrar</Button>
+                                <Button id='Boton-Morado' color='danger' onClick={() => { this.eliminarCancion(item._id); this.cerrarModal(); window.location.reload(); }}>Eliminar Canción</Button>
+                                <Button id='Boton-Azul' color='primary' onClick={() => this.cerrarModal()}>Cerrar</Button>
                             </ModalFooter>
                         </>
                     ))}
