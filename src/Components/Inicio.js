@@ -186,8 +186,8 @@ export default class Inicio extends Component {
                 </div>
 
                 <Modal isOpen={this.state.Abierto} id='Modales'>
-                    <ModalHeader>
-                        <h2><center>¡Ingresa la nueva canción!</center></h2>
+                    <ModalHeader id='Modal-Header'>
+                        <h2><center>Ingresa la nueva canción</center></h2>
                     </ModalHeader>
                     <ModalBody>
                         <FormGroup>

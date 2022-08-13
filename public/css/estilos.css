@@ -89,11 +89,15 @@ a:hover {
 }
 
 #Boton-Morado {
-    background-color: #721c72;
+    background-color: #921d92;
     border: 0px solid;
 }
 
 #Boton-Azul {
     background-color: #352a35;
     border: 0px solid;
+}
+
+#Modal-Header {
+    background-color: #bb06bb;
 }
