@@ -11,6 +11,7 @@ export default class Inicio extends Component {
             listaCancionesFav: [],
             cancionEliminar: [],
             cancionEditar: [],
+            id: '',
             nombre: '',
             grupo: '',
             anio: 0,
@@ -110,6 +111,7 @@ export default class Inicio extends Component {
         axios.get("https://cancionesbackend.herokuapp.com/canciones/" + id).then((response) => {
             this.setState({
                 cancionEditar: response.data,
+                id: response.data[0]._id,
                 nombre: response.data[0].nombre,
                 grupo: response.data[0].grupo,
                 anio: parseInt(response.data[0].anio),
@@ -123,6 +125,7 @@ export default class Inicio extends Component {
             Abierto: false,
             AbiertoEditar: false,
             AbiertoEliminar: false,
+            id: "",
             nombre: "",
             grupo: "",
             anio: 0,
@@ -217,35 +220,33 @@ export default class Inicio extends Component {
                     <ModalHeader>
                         <h2><center>Edita los datos de la canción</center></h2>
                     </ModalHeader>
-                    {this.state.cancionEditar.map((item) => (
                         <>
                             <ModalBody>
                                 <form name="editar" id="editar">
                                 <FormGroup>
                                     <Label for='nombre'>Nombre: </Label>
-                                    <Input type='text' name='nombre' id='nombre' onChange={(e) => this.hacerCambios(e)} placeholder={item.nombre} />
+                                    <Input type='text' name='nombre' id='nombre' onChange={(e) => this.hacerCambios(e)} value={this.state.nombre} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for='grupo'>Grupo: </Label>
-                                    <Input type='text' name='grupo' id='grupo' onChange={(e) => this.hacerCambios(e)} placeholder={item.grupo} />
+                                    <Input type='text' name='grupo' id='grupo' onChange={(e) => this.hacerCambios(e)} value={this.state.grupo} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for='anio'>Año: </Label>
-                                    <Input type='text' name='anio' id='anio' onChange={(e) => this.hacerCambios(e)} placeholder={item.anio} />
+                                    <Input type='text' name='anio' id='anio' onChange={(e) => this.hacerCambios(e)} value={this.state.anio} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for='genero'>Genero: </Label>
-                                    <Input type='text' name='genero' id='genero' onChange={(e) => this.hacerCambios(e)} placeholder={item.genero} />
+                                    <Input type='text' name='genero' id='genero' onChange={(e) => this.hacerCambios(e)} value={this.state.genero} />
                                 </FormGroup>
                                 </form>
 
                             </ModalBody>
                             <ModalFooter>
-                                <Button id='Boton-Morado' color='success' onClick={() => this.editarCancion(item._id) }>Editar Canción</Button>
+                                <Button id='Boton-Morado' color='success' onClick={() => this.editarCancion(this.state.id) }>Editar Canción</Button>
                                 <Button id='Boton-Azul' color='primary' onClick={() => this.cerrarModal()}>Cerrar</Button>
                             </ModalFooter>
                         </>
-                    ))}
                 </Modal>
 
                 <Modal isOpen={this.state.AbiertoEliminar} id='Modales'>
