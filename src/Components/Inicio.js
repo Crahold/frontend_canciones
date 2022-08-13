@@ -30,7 +30,7 @@ export default class Inicio extends Component {
     }
 
     insertarCancion = () => {
-        if (this.state.nombre !== "" && this.state.grupo !== "" && this.state.anio !== 0 && this.state.genero !== "") {
+        if (this.state.nombre !== "" && this.state.grupo !== "" && this.state.anio !== "" && this.state.genero !== "") {
             var currentTime = new Date();
             if (this.state.anio <= currentTime.getFullYear()){
                 const singcancion = {
@@ -65,7 +65,7 @@ export default class Inicio extends Component {
     }
 
     editarCancion = (id) => {
-        if (this.state.nombre !== "" && this.state.grupo !== "" && this.state.anio !== 0 && this.state.genero !== "") {
+        if (this.state.nombre !== "" && this.state.grupo !== "" && this.state.anio !== "" && this.state.genero !== "") {
             var currentTime = new Date();
             if (this.state.anio <= currentTime.getFullYear()){
                 const editarcancion = {
