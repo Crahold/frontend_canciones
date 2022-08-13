@@ -214,7 +214,7 @@ export default class Inicio extends Component {
                 </Modal>
 
                 <Modal isOpen={this.state.AbiertoEditar} id='Modales'>
-                    <ModalHeader>
+                    <ModalHeader id='Modal-Header'>
                         <h2><center>Edita los datos de la canción</center></h2>
                     </ModalHeader>
                     {this.state.cancionEditar.map((item) => (
@@ -249,7 +249,7 @@ export default class Inicio extends Component {
                 </Modal>
 
                 <Modal isOpen={this.state.AbiertoEliminar} id='Modales'>
-                    <ModalHeader>
+                    <ModalHeader id='Modal-Header'>
                         <h2><center>¿Estás seguro de querer eliminar esta canción?</center></h2>
                     </ModalHeader>
                     {this.state.cancionEliminar.map((item) => (
